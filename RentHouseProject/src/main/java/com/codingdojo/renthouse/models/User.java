@@ -51,7 +51,7 @@ public class User {
 	private List<Property> ownedProperties;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "renting", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "estate_id"))
+	@JoinTable(name = "renting", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "property_id"))
 	private List<Property> rentedProperties;
 
 	@ManyToMany(fetch = FetchType.EAGER)

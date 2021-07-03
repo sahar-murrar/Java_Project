@@ -34,6 +34,11 @@ public class Property {
 	private int bathrooms;
 	@NotEmpty(message = "Price must not be empty!")
 	private float price;
+	@NotEmpty(message = "Description must not be empty!")
+	private float description;
+	@NotEmpty(message = "Status must not be empty!")
+	private String status;
+
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "owner_id")
@@ -43,13 +48,10 @@ public class Property {
 	@JoinTable(name = "renting", joinColumns = @JoinColumn(name = "property_id"), inverseJoinColumns = @JoinColumn(name = "client_id"))
 	private List<User> clients;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "properties_categories", joinColumns = @JoinColumn(name = "property_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private List<PropertyCategory> categories;
-
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "property_id")
-	private PropertyCategory property;
+	@JoinColumn(name = "category_id")
+	private PropertyCategory category;
+	
 
 	@Column(updatable = false)
 	private Date createdAt;
@@ -60,7 +62,7 @@ public class Property {
 	}
 
 	public Property(String type, float area, int bedrooms, int bathrooms, float price, User owner, List<User> clients,
-			List<PropertyCategory> categories, PropertyCategory property) {
+		PropertyCategory category, String status) {
 		this.type = type;
 		this.area = area;
 		this.bedrooms = bedrooms;
@@ -68,8 +70,8 @@ public class Property {
 		this.price = price;
 		this.owner = owner;
 		this.clients = clients;
-		this.categories = categories;
-		this.property = property;
+		this.category = category;
+		this.status=status;
 	}
 
 	public Long getId() {
@@ -135,21 +137,21 @@ public class Property {
 	public void setClients(List<User> clients) {
 		this.clients = clients;
 	}
-
-	public List<PropertyCategory> getCategories() {
-		return categories;
+	
+	public float getDescription() {
+		return description;
 	}
 
-	public void setCategories(List<PropertyCategory> categories) {
-		this.categories = categories;
+	public void setDescription(float description) {
+		this.description = description;
 	}
 
-	public PropertyCategory getProperty() {
-		return property;
+	public PropertyCategory getCategory() {
+		return category;
 	}
 
-	public void setProperty(PropertyCategory property) {
-		this.property = property;
+	public void setCategory(PropertyCategory category) {
+		this.category = category;
 	}
 
 	public Date getCreatedAt() {
@@ -166,6 +168,14 @@ public class Property {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@PrePersist
