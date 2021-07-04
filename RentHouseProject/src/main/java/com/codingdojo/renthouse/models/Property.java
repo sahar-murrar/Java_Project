@@ -26,18 +26,20 @@ public class Property {
 	private Long id;
 	@NotEmpty(message = "Type must not be empty!")
 	private String type;
-	@NotEmpty(message = "Area must not be empty!")
+//	@NotEmpty(message = "Area must not be empty!")
 	private float area;
-	@NotEmpty(message = "Bedrooms must not be empty!")
+//	@NotEmpty(message = "Bedrooms must not be empty!")
 	private int bedrooms;
-	@NotEmpty(message = "Bathrooms must not be empty!")
+//	@NotEmpty(message = "Bathrooms must not be empty!")
 	private int bathrooms;
-	@NotEmpty(message = "Price must not be empty!")
+//	@NotEmpty(message = "Price must not be empty!")
 	private float price;
-	@NotEmpty(message = "Description must not be empty!")
-	private float description;
+//	@NotEmpty(message = "Description must not be empty!")
+	private String description;
 	@NotEmpty(message = "Status must not be empty!")
 	private String status;
+	@NotEmpty(message = "City must not be empty!")
+	private String city;
 
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -62,7 +64,7 @@ public class Property {
 	}
 
 	public Property(String type, float area, int bedrooms, int bathrooms, float price, User owner, List<User> clients,
-		PropertyCategory category, String status) {
+		PropertyCategory category, String status, String city, String description) {
 		this.type = type;
 		this.area = area;
 		this.bedrooms = bedrooms;
@@ -72,6 +74,8 @@ public class Property {
 		this.clients = clients;
 		this.category = category;
 		this.status=status;
+		this.city=city;
+		this.description=description;
 	}
 
 	public Long getId() {
@@ -137,12 +141,12 @@ public class Property {
 	public void setClients(List<User> clients) {
 		this.clients = clients;
 	}
-	
-	public float getDescription() {
+
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(float description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -176,6 +180,15 @@ public class Property {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	@PrePersist

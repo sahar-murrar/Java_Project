@@ -20,6 +20,7 @@
 				value="${_csrf.token}" /> <input type="submit" value="Logout!" />
 		</form>
 	</div>
+	<a href="/mainPage"> Go to Main Page</a>
 
 
 

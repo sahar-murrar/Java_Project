@@ -35,7 +35,7 @@ public class User {
     @Column(unique = true)
     private String email;
 	@NotEmpty(message = "Phone Number must not be empty!")
-//	@Pattern(regexp = "[0-9]{10}")
+	@Pattern(regexp = "\\d{10}", message="not valid phone number")
 	private String phone;
 	@NotEmpty(message = "City must not be empty!")
 	private String city;
