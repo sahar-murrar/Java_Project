@@ -31,10 +31,11 @@ public class User {
 	@NotEmpty(message = "Name must not be empty!")
 	private String name;
 	@NotEmpty(message = "Email must not be empty!")
-	@Email(message = "Invalid Email !!")
-	private String email;
+	@Pattern(regexp = "^[a-zA-Z0-9_!#$%&â€™*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9.-]+$", message = "Invalid email pattern")
+    @Column(unique = true)
+    private String email;
 	@NotEmpty(message = "Phone Number must not be empty!")
-	@Pattern(regexp = "(^$|[0-9]{10})")
+//	@Pattern(regexp = "[0-9]{10}")
 	private String phone;
 	@NotEmpty(message = "City must not be empty!")
 	private String city;
@@ -85,7 +86,8 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	
 	public String getEmail() {
 		return email;
 	}
