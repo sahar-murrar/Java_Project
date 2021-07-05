@@ -10,7 +10,12 @@
 <title>Main Page</title>
 </head>
 <body>
-	<a href="/login"> Login</a>
+<div style="display:flex">
+<a href="/login"> Login</a>
+<a href="/view_allProperties" style="margin-left:15px">View All Properties</a>
+
+</div>
+	
 	<h1>Search Property</h1>
 	<form method="POST" action="/serach_property">
 		<p>

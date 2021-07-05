@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.codingdojo.renthouse.models.Property;
-import com.codingdojo.renthouse.models.PropertyCategory;
 import com.codingdojo.renthouse.models.Role;
 import com.codingdojo.renthouse.models.User;
 import com.codingdojo.renthouse.services.PropertyService;
@@ -92,18 +91,101 @@ public class UserController {
 	}
 
 	@PostMapping("/serach_property")
-	public String serach_property(@RequestParam("type") String type, @RequestParam("area") float area,
-			@RequestParam("bedrooms") int bedrooms, @RequestParam("bathrooms") int bathrooms,
+	public String serach_property(@RequestParam("type") String type, @RequestParam("area") String area,
+			@RequestParam("bedrooms") String bedrooms, @RequestParam("bathrooms") String bathrooms,
 			@RequestParam("city") String city, Model model) {
 		List<Property> allProperties = propertyService.findAll();
 		List<Property> wantedProperties = new ArrayList<Property>();
-		for (int i = 0; i < allProperties.size(); i++) {
-			if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getArea() == area
-					&& allProperties.get(i).getBathrooms() == bathrooms
-					&& allProperties.get(i).getBedrooms() == bedrooms && allProperties.get(i).getCity().equals(city)) {
-				wantedProperties.add(allProperties.get(i));
+		if (area == "" && bedrooms == "" && bathrooms == "") {
+			for (int i = 0; i < allProperties.size(); i++) {
+				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)) {
+					wantedProperties.add(allProperties.get(i));
+				}
+
 			}
-			
+
+		} else if (area == "" && bedrooms == "") {
+			int prop_bathrooms = Integer.parseInt(bathrooms);
+			for (int i = 0; i < allProperties.size(); i++) {
+				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
+						&& allProperties.get(i).getBathrooms() == prop_bathrooms) {
+					wantedProperties.add(allProperties.get(i));
+				}
+
+			}
+
+		} else if (bedrooms == "" && bathrooms == "") {
+			float prop_area = Float.parseFloat(area);
+			for (int i = 0; i < allProperties.size(); i++) {
+				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
+						&& allProperties.get(i).getArea() == prop_area) {
+					wantedProperties.add(allProperties.get(i));
+				}
+
+			}
+
+		} else if (area == "" && bathrooms == "") {
+			int prop_bedrooms = Integer.parseInt(bedrooms);
+			for (int i = 0; i < allProperties.size(); i++) {
+				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
+						&& allProperties.get(i).getBedrooms() == prop_bedrooms) {
+					wantedProperties.add(allProperties.get(i));
+				}
+
+			}
+
+		} else if (area == "") {
+			int prop_bedrooms = Integer.parseInt(bedrooms);
+			int prop_bathrooms = Integer.parseInt(bathrooms);
+			for (int i = 0; i < allProperties.size(); i++) {
+				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
+						&& allProperties.get(i).getBathrooms() == prop_bathrooms
+						&& allProperties.get(i).getBedrooms() == prop_bedrooms) {
+					wantedProperties.add(allProperties.get(i));
+				}
+
+			}
+		}
+
+		else if (bedrooms == "") {
+			float prop_area = Float.parseFloat(area);
+			int prop_bathrooms = Integer.parseInt(bathrooms);
+			for (int i = 0; i < allProperties.size(); i++) {
+				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
+						&& allProperties.get(i).getBathrooms() == prop_bathrooms
+						&& allProperties.get(i).getArea() == prop_area) {
+					wantedProperties.add(allProperties.get(i));
+				}
+
+			}
+		}
+
+		else if (bathrooms == "") {
+			float prop_area = Float.parseFloat(area);
+			int prop_bedrooms = Integer.parseInt(bedrooms);
+			for (int i = 0; i < allProperties.size(); i++) {
+				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
+						&& allProperties.get(i).getBedrooms() == prop_bedrooms
+						&& allProperties.get(i).getArea() == prop_area) {
+					wantedProperties.add(allProperties.get(i));
+				}
+
+			}
+		}
+
+		else if (area != "" && bedrooms != "" && bathrooms != "") {
+			float prop_area = Float.parseFloat(area);
+			int prop_bedrooms = Integer.parseInt(bedrooms);
+			int prop_bathrooms = Integer.parseInt(bathrooms);
+			for (int i = 0; i < allProperties.size(); i++) {
+				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getArea() == prop_area
+						&& allProperties.get(i).getBathrooms() == prop_bathrooms
+						&& allProperties.get(i).getBedrooms() == prop_bedrooms
+						&& allProperties.get(i).getCity().equals(city)) {
+					wantedProperties.add(allProperties.get(i));
+				}
+
+			}
 		}
 		model.addAttribute("wantedProperties", wantedProperties);
 		return "propertyList.jsp";
@@ -115,34 +197,31 @@ public class UserController {
 		if (result.hasErrors()) {
 			return "mainPage.jsp";
 		}
-		User user =(User)session.getAttribute("currentUser");
-		List<Role> userRolles= user.getRoles();
-		for(int j=0; j<userRolles.size(); j++) {
-			if(userRolles.get(j).getName().equals("ROLE_OWNER")) {
+		User user = (User) session.getAttribute("currentUser");
+		if(user == null) {
+			return "redirect:/login";
+		}
+		List<Role> userRolles = user.getRoles();
+		for (int j = 0; j < userRolles.size(); j++) {
+			if (userRolles.get(j).getName().equals("ROLE_OWNER")) {
 				property.setOwner(user);
 				propertyService.createProperty(property, property.getType(), user);
 				return "redirect:/mainPage";
 			}
 		}
-//		List<Role> allRolles= roleService.findAll();
-//		for(int i=0; i<allRolles.size(); i++) {
-//			if(allRolles.get(i).getUsers().contains(user)) {
-//				String userRole= user.getRoles().get(0).getName();
-//				if(userRole.equals("Owner")) {
-//					propertyService.createProperty(property);
-//					return "redirect:/mainPage";
-//				}
-//				
-//			}
-//		}
+
 
 		return "redirect:/mainPage";
 
 	}
+	
+	@RequestMapping("/view_allProperties")
+	public String view_allProperties(Model model){
+		List<Property> allProperties= propertyService.findAll();
+		model.addAttribute("allProperties", allProperties);
+		return "view_properties.jsp";
+		
+	}
 
-//	@RequestMapping("/logout")
-//	public String logout() {
-//		
-//	}
 
 }
