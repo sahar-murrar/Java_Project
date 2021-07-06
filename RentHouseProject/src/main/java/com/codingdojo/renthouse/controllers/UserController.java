@@ -1,16 +1,19 @@
 package com.codingdojo.renthouse.controllers;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,6 +78,12 @@ public class UserController {
 		String username = principal.getName();
 		model.addAttribute("currentUser", userService.findByUsername(username));
 		session.setAttribute("currentUser", userService.findByUsername(username));
+		User user=userService.findByUsername(username);
+		List<Role> allRolles= roleService.findAll();
+		List<Role> userRolles=user.getRoles();
+		model.addAttribute("userRolles", userRolles);
+		model.addAttribute("ownerRole", allRolles.get(1));
+		
 		return "home.jsp";
 	}
 
@@ -198,7 +207,7 @@ public class UserController {
 			return "mainPage.jsp";
 		}
 		User user = (User) session.getAttribute("currentUser");
-		if(user == null) {
+		if (user == null) {
 			return "redirect:/login";
 		}
 		List<Role> userRolles = user.getRoles();
@@ -210,18 +219,76 @@ public class UserController {
 			}
 		}
 
-
 		return "redirect:/mainPage";
 
 	}
-	
+
 	@RequestMapping("/view_allProperties")
-	public String view_allProperties(Model model){
-		List<Property> allProperties= propertyService.findAll();
+	public String view_allProperties(Model model) {
+		List<Property> allProperties = propertyService.findByStatus("available");
 		model.addAttribute("allProperties", allProperties);
 		return "view_properties.jsp";
-		
+
 	}
 
+	@RequestMapping("/property/reserve/{id}")
+	public String reserve_property(@PathVariable("id") Long id, Model model, HttpSession session) {
+		Property p = propertyService.findById(id);
+		session.setAttribute("property", p);
+		return "redirect:/reserve";
+	}
+	
+	@RequestMapping("/reserve")
+	public String renderReserveForm(Model model, HttpSession session) {
+		Property p=(Property)session.getAttribute("property");
+		model.addAttribute("property", p);
+		return "reserve_property.jsp";
+	}
+
+	@PostMapping("/property/reserve/{id}")
+	public String process_reservation(@PathVariable("id") Long id, HttpSession session, Model model,
+			@RequestParam("startReserveDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startReserveDate,
+			@RequestParam("endReserveDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endReserveDate) {
+		Property p = propertyService.findById(id);
+		User user = (User) session.getAttribute("currentUser");
+		if(user==null) {
+			return "redirect:/login";
+		}
+		p.setClient(user);
+		List<Property> clientReservedProperties = propertyService.findByClient(user);
+	
+		user.setRentedProperties(clientReservedProperties);
+		userService.updateUser(user);
+		propertyService.updateProperty(p, user,startReserveDate, endReserveDate);
+		return "redirect:/view_reservedProperties";
+	}
+	@RequestMapping("/view_reservedProperties")
+	public String view_reservedProperties(Model model, HttpSession session) {
+		User user = (User) session.getAttribute("currentUser");
+		if(user==null) {
+			return "redirect:/login";
+		}
+		List<Property> clientReservedProperties = propertyService.findByClient(user);
+		model.addAttribute("clientReservedProperties", clientReservedProperties);
+		model.addAttribute("user", user);
+		return "userReservedProperties.jsp";
+	}
+	
+	@RequestMapping("/view_ownProperties")
+	public String view_ownProperties(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("currentUser");
+		List<Property> OwnerProperties= propertyService.findByOwner(user);
+		model.addAttribute("OwnerProperties", OwnerProperties);
+		model.addAttribute("user", user);
+		return "view_ownProperties.jsp";
+	}
+	@PostMapping("/changeStatus/{id}")
+	public String changeStatus(Model model, @PathVariable("id") Long id) {
+		Property p = propertyService.findById(id);
+		p.setStatus("available");
+		p.setStartReserveDate(null);
+		p.setEndReserveDate(null);
+		return "redirect:/view_ownProperties";
+	}
 
 }

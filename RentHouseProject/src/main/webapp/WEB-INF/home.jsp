@@ -20,7 +20,15 @@
 				value="${_csrf.token}" /> <input type="submit" value="Logout!" />
 		</form>
 	</div>
-	<a href="/mainPage"> Go to Main Page</a>
+	<div style="display: flex">
+		<a href="/mainPage"> Go to Main Page</a> 
+		<c:if test="${userRolles.contains(ownerRole)}">
+		<a href="/view_ownProperties" style="margin-left: 15px">View My Own Properties</a>
+		
+		</c:if>
+		
+
+	</div>
 
 
 

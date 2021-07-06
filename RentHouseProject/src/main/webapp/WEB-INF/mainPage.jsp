@@ -13,6 +13,7 @@
 <div style="display:flex">
 <a href="/login"> Login</a>
 <a href="/view_allProperties" style="margin-left:15px">View All Properties</a>
+<a href="/view_reservedProperties" style="margin-left:15px">View My Reserved Properties</a>
 
 </div>
 	
@@ -113,6 +114,11 @@
 			</form:select>
 			<form:errors path="city" />
 		</p>
+		<p>
+            <form:label path="image">image:</form:label>
+            <form:input path="image" />
+            <form:errors path="image" />
+        </p>
 		<p>
 			<form:input type="hidden" path="status" value="available" />
 		</p>

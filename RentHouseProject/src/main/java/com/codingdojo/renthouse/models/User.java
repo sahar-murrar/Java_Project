@@ -51,8 +51,11 @@ public class User {
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
 	private List<Property> ownedProperties;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "renting", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "property_id"))
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	@JoinTable(name = "renting", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "property_id"))
+//	private List<Property> rentedProperties;
+	
+	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
 	private List<Property> rentedProperties;
 
 	@ManyToMany(fetch = FetchType.EAGER)

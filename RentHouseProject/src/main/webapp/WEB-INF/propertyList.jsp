@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ page isErrorPage="true"%>    
+<%@ page isErrorPage="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,14 +10,30 @@
 <title>Wanted Product List</title>
 </head>
 <body>
-<c:forEach items="${wantedProperties}" var="property">
-<p><c:out value="${property.type}"></c:out></p>
-<p><c:out value="${property.area}"></c:out></p>
-<p><c:out value="${property.bedrooms}"></c:out></p>
-<p><c:out value="${property.bathrooms}"></c:out></p>
-<p><c:out value="${property.city}"></c:out></p>
-<p>-----------------------------------------------------</p>
-</c:forEach>
+
+	<c:forEach items="${wantedProperties}" var="property">
+		<p>
+			<img src="images/<c:out value="${property.image}"></c:out>"
+				alt="image_not_found">
+		</p>
+		<p>
+			<c:out value="${property.type}"></c:out>
+		</p>
+		<p>
+			<c:out value="${property.area}"></c:out>
+		</p>
+		<p>
+			<c:out value="${property.bedrooms}"></c:out>
+		</p>
+		<p>
+			<c:out value="${property.bathrooms}"></c:out>
+		</p>
+		<p>
+			<c:out value="${property.city}"></c:out>
+		</p>
+		<p>-----------------------------------------------------</p>
+	</c:forEach>
+
 
 </body>
 </html>
