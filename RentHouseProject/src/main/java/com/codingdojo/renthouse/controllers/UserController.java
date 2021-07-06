@@ -24,17 +24,20 @@ import com.codingdojo.renthouse.models.User;
 import com.codingdojo.renthouse.services.PropertyService;
 import com.codingdojo.renthouse.services.RoleService;
 import com.codingdojo.renthouse.services.UserService;
+import com.codingdojo.renthouse.validators.UserValidator;
 
 @Controller
 public class UserController {
 	private UserService userService;
 	private RoleService roleService;
 	private PropertyService propertyService;
+	private final UserValidator userValidator;
 
-	public UserController(UserService userService, RoleService roleService, PropertyService propertyService) {
+	public UserController(UserService userService, RoleService roleService, PropertyService propertyService, UserValidator userValidator) {
 		this.userService = userService;
 		this.roleService = roleService;
 		this.propertyService = propertyService;
+		this.userValidator=userValidator;
 	}
 
 	@RequestMapping("/mainPage")
@@ -52,14 +55,16 @@ public class UserController {
 	@PostMapping("/registration")
 	public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
 			HttpSession session, @RequestParam("role") String role) {
+		userValidator.validate(user, result);
 		if (result.hasErrors()) {
 			return "registration.jsp";
 		}
-		if (role.equals("ADMIN")) {
-			model.addAttribute("currentUser", user);
-			userService.saveUserWithAdminRole(user);
-			return "successRegistration.jsp";
-		} else if (role.equals("CLIENT")) {
+//		if (role.equals("ADMIN")) {
+//			model.addAttribute("currentUser", user);
+//			userService.saveUserWithAdminRole(user);
+//			return "successRegistration.jsp";
+//		} 
+		if (role.equals("CLIENT")) {
 			model.addAttribute("currentUser", user);
 			userService.saveUserWithClientRole(user);
 			return "successRegistration.jsp";
@@ -75,15 +80,17 @@ public class UserController {
 	@RequestMapping(value = { "/", "/home" })
 	public String home(Principal principal, Model model, HttpSession session) {
 		// 1
+		if(principal == null) {
+			return "redirect:/login";
+		}
 		String username = principal.getName();
 		model.addAttribute("currentUser", userService.findByUsername(username));
 		session.setAttribute("currentUser", userService.findByUsername(username));
-		User user=userService.findByUsername(username);
-		List<Role> allRolles= roleService.findAll();
-		List<Role> userRolles=user.getRoles();
-		model.addAttribute("userRolles", userRolles);
-		model.addAttribute("ownerRole", allRolles.get(1));
-		
+		User user = userService.findByUsername(username);
+//		List<Role> allRolles = roleService.findAll();
+		List<Role> userRolles = user.getRoles();
+		model.addAttribute("userRole", userRolles.get(0).getName());
+
 		return "home.jsp";
 	}
 
@@ -237,35 +244,36 @@ public class UserController {
 		session.setAttribute("property", p);
 		return "redirect:/reserve";
 	}
-	
+
 	@RequestMapping("/reserve")
 	public String renderReserveForm(Model model, HttpSession session) {
-		Property p=(Property)session.getAttribute("property");
+		Property p = (Property) session.getAttribute("property");
 		model.addAttribute("property", p);
 		return "reserve_property.jsp";
 	}
 
 	@PostMapping("/property/reserve/{id}")
 	public String process_reservation(@PathVariable("id") Long id, HttpSession session, Model model,
-			@RequestParam("startReserveDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startReserveDate,
-			@RequestParam("endReserveDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endReserveDate) {
+			@RequestParam("startReserveDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startReserveDate,
+			@RequestParam("endReserveDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endReserveDate) {
 		Property p = propertyService.findById(id);
 		User user = (User) session.getAttribute("currentUser");
-		if(user==null) {
+		if (user == null) {
 			return "redirect:/login";
 		}
 		p.setClient(user);
 		List<Property> clientReservedProperties = propertyService.findByClient(user);
-	
+
 		user.setRentedProperties(clientReservedProperties);
 		userService.updateUser(user);
-		propertyService.updateProperty(p, user,startReserveDate, endReserveDate);
+		propertyService.updateProperty(p, user, startReserveDate, endReserveDate);
 		return "redirect:/view_reservedProperties";
 	}
+
 	@RequestMapping("/view_reservedProperties")
 	public String view_reservedProperties(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("currentUser");
-		if(user==null) {
+		if (user == null) {
 			return "redirect:/login";
 		}
 		List<Property> clientReservedProperties = propertyService.findByClient(user);
@@ -273,22 +281,71 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "userReservedProperties.jsp";
 	}
-	
+
 	@RequestMapping("/view_ownProperties")
 	public String view_ownProperties(HttpSession session, Model model) {
 		User user = (User) session.getAttribute("currentUser");
-		List<Property> OwnerProperties= propertyService.findByOwner(user);
+		List<Property> OwnerProperties = propertyService.findByOwner(user);
 		model.addAttribute("OwnerProperties", OwnerProperties);
 		model.addAttribute("user", user);
 		return "view_ownProperties.jsp";
 	}
+
 	@PostMapping("/changeStatus/{id}")
 	public String changeStatus(Model model, @PathVariable("id") Long id) {
 		Property p = propertyService.findById(id);
 		p.setStatus("available");
 		p.setStartReserveDate(null);
 		p.setEndReserveDate(null);
+		p.setClient(null);
+		propertyService.updateProperty(p);
 		return "redirect:/view_ownProperties";
+	}
+
+	@RequestMapping("/view_allClientsAndOwners")
+	public String view_allClientsAndOwners(Model model) {
+		List<User> allUsers= userService.findAll();
+		List<User> allClients= new ArrayList<User>();
+		List<User> allOwners= new ArrayList<User>();
+		for(int i=0; i<allUsers.size(); i++) {
+			if(allUsers.get(i).getRoles().get(0).getName().equals("ROLE_CLIENT")) {
+				allClients.add(allUsers.get(i));
+			}
+			else if(allUsers.get(i).getRoles().get(0).getName().equals("ROLE_OWNER")) {
+				allOwners.add(allUsers.get(i));
+			}
+		}
+		model.addAttribute("allClients", allClients);
+		model.addAttribute("allOwners", allOwners);
+		return "allClientsAndOwners.jsp";
+	}
+	
+	@PostMapping("/deleteClient/{id}")
+	public String deleteClient(@PathVariable("id") Long id) {
+		User client= userService.findById(id);
+		List<Property> allProperties= propertyService.findAll();
+		for(int i=0; i<allProperties.size();i++) {
+			if(allProperties.get(i).getClient()==client) {
+				allProperties.get(i).setClient(null);
+			}
+		}
+		userService.deleteUser(client);
+		return "redirect:/view_allClientsAndOwners";
+	}
+	
+	@PostMapping("/deleteOwner/{id}")
+	public String deleteOwner(@PathVariable("id") Long id) {
+		User owner= userService.findById(id);
+		List<Property> allProperties= propertyService.findAll();
+		for(int i=0; i<allProperties.size();i++) {
+			if(allProperties.get(i).getOwner()==owner) {
+				allProperties.get(i).setOwner(null);
+				propertyService.deleteProperty(allProperties.get(i));
+			}
+		}
+	
+		userService.deleteUser(owner);
+		return "redirect:/view_allClientsAndOwners";
 	}
 
 }

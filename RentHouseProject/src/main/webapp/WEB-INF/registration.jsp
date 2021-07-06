@@ -51,7 +51,8 @@
 
 			<p>
 
-				<input type="radio" name="role" value="ADMIN" />Admin <input
+			<!--  	<input type="radio" name="role" value="ADMIN" />Admin -->
+			<input
 					type="radio" name="role" value="CLIENT" />Client <input
 					type="radio" name="role" value="OWNER" />Owner
 			</p>

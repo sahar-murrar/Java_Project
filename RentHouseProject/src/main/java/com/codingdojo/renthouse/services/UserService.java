@@ -1,5 +1,7 @@
 package com.codingdojo.renthouse.services;
 
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +53,12 @@ public class UserService {
 	}
 	public User updateUser(User user) {
 		return userRepository.save(user);
+	}
+	public List<User> findAll(){
+		return userRepository.findAll();
+	}
+	public void deleteUser(User user) {
+		userRepository.delete(user);
 	}
 
 }

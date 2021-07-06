@@ -58,5 +58,12 @@ public class PropertyService {
 	public List<Property> findByOwner(User owner){
 		return propertyRepository.findByOwner(owner);
 	}
+	
+	public Property updateProperty(Property p) {
+		return propertyRepository.save(p);
+	}
+	public void deleteProperty(Property p) {
+		propertyRepository.delete(p);
+	}
 
 }

@@ -22,9 +22,12 @@
 	</div>
 	<div style="display: flex">
 		<a href="/mainPage"> Go to Main Page</a> 
-		<c:if test="${userRolles.contains(ownerRole)}">
+		<c:if test="${userRole == 'ROLE_OWNER'}">
 		<a href="/view_ownProperties" style="margin-left: 15px">View My Own Properties</a>
 		
+		</c:if>
+		<c:if test="${userRole == 'ROLE_ADMIN'}">
+		<a href="/view_allClientsAndOwners" style="margin-left: 15px">View all Clients and Owners</a>
 		</c:if>
 		
 
