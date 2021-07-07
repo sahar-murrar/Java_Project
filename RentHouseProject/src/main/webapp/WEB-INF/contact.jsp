@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style>
-        .yt{
+        .oo{
             font-size: 20px;
             color: rgb(255, 16, 16);
             font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -39,12 +39,9 @@
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="theme-color" content="#3454d1">
 <link href="./css/styles.css?10eb1139a9f2b8f356b2" rel="stylesheet">
-
 </head>
 <body>
-
-  <!-- HEADER -->
-    <header>
+<header>
         <!-- NAVBAR TOP -->
 
         <!-- NAVBAR -->
@@ -59,25 +56,25 @@
         <div class="collapse navbar-collapse" id="main_nav99">
             <ul class="navbar-nav  mx-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="/mainPage"> Home </a>
-                    
+                    <a class="nav-link " href="/mainPage"> Home </a>
+                  
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="/about-us"> About us </a>
+                    <a class="nav-link" href="/about-us"> About Us </a>
                     
+                </li>
 
                 
 
-               <li class="nav-item"><a class="nav-link" href="/contact"> contact </a></li>
+                <li class="nav-item"><a class="nav-link" href="/contact"> contact </a></li>
             </ul>
 
 
             <!-- Search bar.// -->
             <ul class="navbar-nav">
                 <li>
-                    <a class="yt" href="/login">login |</a>
-                    <a class="yt" href="/registration">Register</a>
-                        
+                    <a class="oo"href="/login">Login |</a>
+                    <a class="oo"href="/registration">Register </a>
                 </li>
             </ul>
             <!-- Search content bar.// -->
@@ -114,7 +111,7 @@
                 <div class="container">
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8 text-center">
-                            <h2 class="text-capitalize text-white">login</h2>
+                            <h2 class="text-capitalize text-white">contact us</h2>
                             <ul class="list-inline ">
                                 <li class="list-inline-item">
                                     <a href="#" class="text-white">
@@ -128,7 +125,7 @@
                                 </li>
                                 <li class="list-inline-item">
                                     <a href="#" class="text-white">
-                                        login
+                                        contact us
                                     </a>
                                 </li>
 
@@ -142,58 +139,116 @@
     </header>
     <div class="clearfix"></div>
 
-    <!-- LISTING LIST -->
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!-- Form Login -->
-<div class="card mx-auto" style="max-width: 380px;">
-    <div class="card-body">
-        <h4 class="card-title mb-4">Sign In</h4>
-        <c:if test="${logoutMessage != null}">
-			<c:out value="${logoutMessage}"></c:out>
-		</c:if>
-		<h1>Login</h1>
-		<c:if test="${errorMessage != null}">
-			<c:out value="${errorMessage}"></c:out>
-		</c:if>
-        <form:form method="POST" action="/login" modelAttribute="user">
-            
-            <div class="form-group">
-                <input type="email" class="form-control" id="username" name="username" />
-            </div> <!-- form-group// -->
-            <div class="form-group">
-               <input type="password" class="form-control" id="password" name="password" />
-                
-                <input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" /> 
-            </div> <!-- form-group// -->
+    <!-- Form contact -->
+    <section class="wrap__contact-form">
+        
 
-            <div class="form-group">
-                <a href="#" class="float-right">Forgot password?</a>
-                <label class="float-left custom-control custom-checkbox"> <input type="checkbox"
-                        class="custom-control-input" checked="">
-                    <span class="custom-control-label"> Remember </span>
-                </label>
-            </div> <!-- form-group form-check .// -->
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block"> Login </button>
-            </div> <!-- form-group// -->
-        </form:form>
-    </div> <!-- card-body.// -->
-</div> <!-- card .// -->
 
-<p class="text-center mt-4">Don't have account? <a href="/registration">Sign up</a></p>
+                <div class="col-md-4">
+                    <div class="wrap__contact-open-hours">
+                        <h5 class="text-capitalize">open hours</h5>
+                        <ul class="list-unstyled">
+                            <li class="d-flex align-items-center justify-content-between"><span>Monday - Friday</span>
+                                <span>08 AM - 19 PM</span></li>
+                            <li class="d-flex align-items-center justify-content-between"><span>Saturday</span> <span>09
+                                    AM - 14 PM</span></li>
+                            <li class="d-flex align-items-center justify-content-between"><span>Friday</span>
+                                <span>Closed</span></li>
+                        </ul>
+                    </div>
+                    <h5>Info location</h5>
+                    <div class="wrap__contact-form-office">
+                        <ul class="list-unstyled">
+                            <li>
+                                <span>
+                                    <i class="fa fa-home"></i>
+                                </span>
+
+                                PO Box 00627 Main Street, Birzeit,
+                                Ramallah
+
+
+                            </li>
+                            <li>
+                                <span>
+                                    <i class="fa fa-phone"></i>
+                                    <a href="tel:">+972-595434672</a>
+                                </span>
+
+                            </li>
+                            <li>
+                                <span>
+                                    <i class="fa fa-envelope"></i>
+                                    <a href="mailto:">ghaith.assaf1993@gmail.com</a>
+                                </span>
+
+                            </li>
+                            <li>
+                                <span>
+                                    <i class="fa fa-globe"></i>
+                                    <a href="#" target="_blank"> www.renthouse.com</a>
+                                </span>
+                            </li>
+                        </ul>
+
+                        <div class="social__media">
+                            <h5>find us</h5>
+                            <ul class="list-inline">
+
+                                <li class="list-inline-item">
+                                    <a href="#" class="btn btn-social rounded text-white facebook">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="btn btn-social rounded text-white twitter">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="btn btn-social rounded text-white whatsapp">
+                                        <i class="fa fa-whatsapp"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="btn btn-social rounded text-white telegram">
+                                        <i class="fa fa-telegram"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#" class="btn btn-social rounded text-white linkedin">
+                                        <i class="fa fa-linkedin"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- END LISTING LIST -->
+    <!-- End Form contact  -->
 
 
+    <!-- CALL TO ACTION -->
+    <section class="cta-v1 py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-9">
+                <h2 class="text-uppercase text-white">Looking To Sell Or Rent Your Property?</h2>
+                <p class="text-capitalize text-white">We Will Assist You In The Best And Comfortable Property Services
+                    For You
+                </p>
 
-    
+            </div>
+            <div class="col-lg-3">
+                <a href="#" class="btn btn-light text-uppercase ">request a quote
+                    <i class="fa fa-angle-right ml-3 arrow-btn "></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- END CALL TO ACTION -->
 
     <!-- Footer  -->
 <footer>
@@ -207,12 +262,19 @@
                             <img src="images/logo-blue.png" alt="" class="logo-footer">
                         </figure>
                         <p>
-                            RentHouse is based on real estate renting service,which offers to the client in 12 cities all the added properties list which include (apartments,houses,villas,commercial offices),now any owner who owns the property can publish it on website,so the website can offers the easement reach to list of endless real estate properties in westbank.                            </p>
-
+                            Rethouse Real Estate is a premium Property template based on Bootstrap 4. Rethouse Real
+                            Estate helped thousands of clients to find the right property for their needs.
 
                         </p>
 
-                       
+                        <ul class="list-unstyled mb-0 mt-3">
+                            <li> <b> <i class="fa fa-map-marker"></i></b><span>214 West Arnold St. New York, NY
+                                    10002</span> </li>
+                            <li> <b><i class="fa fa-phone-square"></i></b><span>(123) 345-6789</span> </li>
+                            <li> <b><i class="fa fa-phone-square"></i></b><span>(+100) 123 456 7890</span> </li>
+                            <li> <b><i class="fa fa-headphones"></i></b><span>support@realvilla.demo</span> </li>
+                            <li> <b><i class="fa fa-clock-o"></i></b><span>Mon - Sun / 9:00AM - 8:00PM</span> </li>
+                        </ul>
                     </div>
 
                 </div>
@@ -300,9 +362,21 @@
                             </button>
                         </p>
                         <br>
-                        <h4 class="footer-title">Information</h4>
-                        <p>                            RentHouse is based on real estate renting service,which offers to the client in 12 cities all the added properties list which include (apartments,houses,villas,commercial offices),now any owner who owns the property can publish it on website,so the website can offers the easement reach to list of endless real estate properties in westbank.                            </p>
-                    </p>
+                        <h4 class="footer-title">newsletter</h4>
+                        <!-- Form Newsletter -->
+                        <div class="widget__form-newsletter ">
+                            <p>
+
+                                Dont miss to subscribe to our news feeds, kindly fill the form below
+                            </p>
+                            <div class="mt-3">
+                                <input type="text" class="form-control mb-2" placeholder="Your email address">
+
+                                <button class="btn btn-primary btn-block text-capitalize" type="button">subscribe
+
+                                </button>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -317,11 +391,34 @@
             <div class="row flex-column-reverse flex-md-row">
                 <div class="col-md-6">
                     <span>
-                        © 2021 Rethouse Real Estate.
-                       
+                        © 2020 Rethouse Real Estate - Premium real estate & theme &amp; theme by
+                        <a href="#">retenvi.com</a>
                     </span>
                 </div>
-               
+                <div class="col-md-6">
+                    <ul class="list-inline ">
+                        <li class="list-inline-item">
+                            <a href="#">
+                                privacy
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                contact
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                about
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                faq
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -330,14 +427,8 @@
 
 
 
-
-
-
-
-
     <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
 
 <script type="text/javascript" src="./js/index.bundle.js?10eb1139a9f2b8f356b2"></script>
-
 </body>
 </html>

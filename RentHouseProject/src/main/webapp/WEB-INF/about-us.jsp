@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style>
-        .yt{
+        .uu{
             font-size: 20px;
             color: rgb(255, 16, 16);
             font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -39,13 +39,11 @@
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="theme-color" content="#3454d1">
 <link href="./css/styles.css?10eb1139a9f2b8f356b2" rel="stylesheet">
-
 </head>
 <body>
 
-  <!-- HEADER -->
-    <header>
-        <!-- NAVBAR TOP -->
+ <header>
+        
 
         <!-- NAVBAR -->
         <nav class="navbar navbar-hover navbar-expand-lg navbar-soft">
@@ -63,20 +61,20 @@
                     
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="/about-us"> About us </a>
+                    <a class="nav-link" href="/about-us"> About Us </a>
                     
 
                 
 
-               <li class="nav-item"><a class="nav-link" href="/contact"> contact </a></li>
+                <li class="nav-item"><a class="nav-link" href="/contact"> contact </a></li>
             </ul>
 
 
             <!-- Search bar.// -->
             <ul class="navbar-nav">
                 <li>
-                    <a class="yt" href="/login">login |</a>
-                    <a class="yt" href="/registration">Register</a>
+                    <a class="uu"href="/login">Login |</a>
+                    <a class="uu"href="/registration">Register</a>
                         
                 </li>
             </ul>
@@ -114,7 +112,7 @@
                 <div class="container">
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8 text-center">
-                            <h2 class="text-capitalize text-white">login</h2>
+                            <h2 class="text-capitalize text-white">about us</h2>
                             <ul class="list-inline ">
                                 <li class="list-inline-item">
                                     <a href="#" class="text-white">
@@ -128,7 +126,7 @@
                                 </li>
                                 <li class="list-inline-item">
                                     <a href="#" class="text-white">
-                                        login
+                                        about us
                                     </a>
                                 </li>
 
@@ -142,55 +140,48 @@
     </header>
     <div class="clearfix"></div>
 
-    <!-- LISTING LIST -->
-    <section>
+
+    <!-- ABOUT -->
+    <section class="home__about bg-light">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <!-- Form Login -->
-<div class="card mx-auto" style="max-width: 380px;">
-    <div class="card-body">
-        <h4 class="card-title mb-4">Sign In</h4>
-        <c:if test="${logoutMessage != null}">
-			<c:out value="${logoutMessage}"></c:out>
-		</c:if>
-		<h1>Login</h1>
-		<c:if test="${errorMessage != null}">
-			<c:out value="${errorMessage}"></c:out>
-		</c:if>
-        <form:form method="POST" action="/login" modelAttribute="user">
-            
-            <div class="form-group">
-                <input type="email" class="form-control" id="username" name="username" />
-            </div> <!-- form-group// -->
-            <div class="form-group">
-               <input type="password" class="form-control" id="password" name="password" />
-                
-                <input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" /> 
-            </div> <!-- form-group// -->
+                <div class="col-lg-6">
+                    <div class="title__leading">
+                        <!-- <h6 class="text-uppercase">trusted By thousands</h6> -->
+                        <h2 class="text-capitalize">About Us</h2>
+                        <p>
+                            RentHouse is based on real estate renting service,which offers to the client in 12 cities all the added properties list which include (apartments,houses,villas,commercial offices),now any owner who owns the property can publish it on website,so the website can offers the easement reach to list of endless real estate properties in westbank.                            </p>
 
-            <div class="form-group">
-                <a href="#" class="float-right">Forgot password?</a>
-                <label class="float-left custom-control custom-checkbox"> <input type="checkbox"
-                        class="custom-control-input" checked="">
-                    <span class="custom-control-label"> Remember </span>
-                </label>
-            </div> <!-- form-group form-check .// -->
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block"> Login </button>
-            </div> <!-- form-group// -->
-        </form:form>
-    </div> <!-- card-body.// -->
-</div> <!-- card .// -->
+                        </p>
+                        
+                        <a href="#" class="btn btn-primary mt-3 text-capitalize"> read more
+                            <i class="fa fa-angle-right ml-3 "></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about__image">
+                        <div class="about__image-top">
+                            <div class="about__image-top-hover">
+                                <img src="images/600x400.jpg" alt="" class="img-fluid">
+                            </div>
 
-<p class="text-center mt-4">Don't have account? <a href="/registration">Sign up</a></p>
+                        </div>
+                        <div class="about__image-bottom">
+                            <div class="about__image-bottom-hover">
+                                <img src="images/600x400.jpg" alt="" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- END LISTING LIST -->
+    <!-- END ABOUT -->
 
+
+
+    
+    
 
 
     
@@ -301,8 +292,15 @@
                         </p>
                         <br>
                         <h4 class="footer-title">Information</h4>
-                        <p>                            RentHouse is based on real estate renting service,which offers to the client in 12 cities all the added properties list which include (apartments,houses,villas,commercial offices),now any owner who owns the property can publish it on website,so the website can offers the easement reach to list of endless real estate properties in westbank.                            </p>
-                    </p>
+                        <!-- Form Newsletter -->
+                        <div class="widget__form-newsletter ">
+                            <p>
+
+                                RentHouse is based on real estate renting service,which offers to the client in 12 cities all the added properties list which include (apartments,houses,villas,commercial offices),now any owner who owns the property can publish it on website,so the website can offers the easement reach to list of endless real estate properties in westbank.                            </p>
+
+                            </p>
+                            
+                        </div>
 
                     </div>
                 </div>
@@ -318,10 +316,10 @@
                 <div class="col-md-6">
                     <span>
                         © 2021 Rethouse Real Estate.
-                       
+                        
                     </span>
                 </div>
-               
+                
             </div>
         </div>
     </div>

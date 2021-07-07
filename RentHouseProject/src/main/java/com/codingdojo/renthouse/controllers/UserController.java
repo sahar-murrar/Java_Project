@@ -114,7 +114,7 @@ public class UserController {
 		List<Property> wantedProperties = new ArrayList<Property>();
 		if (area == "" && bedrooms == "" && bathrooms == "") {
 			for (int i = 0; i < allProperties.size(); i++) {
-				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)) {
+				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city) && allProperties.get(i).getStatus().equals("available") ) {
 					wantedProperties.add(allProperties.get(i));
 				}
 
@@ -124,7 +124,7 @@ public class UserController {
 			int prop_bathrooms = Integer.parseInt(bathrooms);
 			for (int i = 0; i < allProperties.size(); i++) {
 				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
-						&& allProperties.get(i).getBathrooms() == prop_bathrooms) {
+						&& allProperties.get(i).getBathrooms() == prop_bathrooms  && allProperties.get(i).getCity().equals(city) && allProperties.get(i).getStatus().equals("available")) {
 					wantedProperties.add(allProperties.get(i));
 				}
 
@@ -134,7 +134,7 @@ public class UserController {
 			float prop_area = Float.parseFloat(area);
 			for (int i = 0; i < allProperties.size(); i++) {
 				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
-						&& allProperties.get(i).getArea() == prop_area) {
+						&& allProperties.get(i).getArea() == prop_area  && allProperties.get(i).getCity().equals(city) && allProperties.get(i).getStatus().equals("available")) {
 					wantedProperties.add(allProperties.get(i));
 				}
 
@@ -144,7 +144,7 @@ public class UserController {
 			int prop_bedrooms = Integer.parseInt(bedrooms);
 			for (int i = 0; i < allProperties.size(); i++) {
 				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
-						&& allProperties.get(i).getBedrooms() == prop_bedrooms) {
+						&& allProperties.get(i).getBedrooms() == prop_bedrooms  && allProperties.get(i).getCity().equals(city) && allProperties.get(i).getStatus().equals("available")) {
 					wantedProperties.add(allProperties.get(i));
 				}
 
@@ -156,7 +156,7 @@ public class UserController {
 			for (int i = 0; i < allProperties.size(); i++) {
 				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
 						&& allProperties.get(i).getBathrooms() == prop_bathrooms
-						&& allProperties.get(i).getBedrooms() == prop_bedrooms) {
+						&& allProperties.get(i).getBedrooms() == prop_bedrooms  && allProperties.get(i).getCity().equals(city) && allProperties.get(i).getStatus().equals("available")) {
 					wantedProperties.add(allProperties.get(i));
 				}
 
@@ -169,7 +169,7 @@ public class UserController {
 			for (int i = 0; i < allProperties.size(); i++) {
 				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
 						&& allProperties.get(i).getBathrooms() == prop_bathrooms
-						&& allProperties.get(i).getArea() == prop_area) {
+						&& allProperties.get(i).getArea() == prop_area  && allProperties.get(i).getCity().equals(city) && allProperties.get(i).getStatus().equals("available")) {
 					wantedProperties.add(allProperties.get(i));
 				}
 
@@ -182,7 +182,7 @@ public class UserController {
 			for (int i = 0; i < allProperties.size(); i++) {
 				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getCity().equals(city)
 						&& allProperties.get(i).getBedrooms() == prop_bedrooms
-						&& allProperties.get(i).getArea() == prop_area) {
+						&& allProperties.get(i).getArea() == prop_area  && allProperties.get(i).getCity().equals(city) && allProperties.get(i).getStatus().equals("available")) {
 					wantedProperties.add(allProperties.get(i));
 				}
 
@@ -197,7 +197,7 @@ public class UserController {
 				if (allProperties.get(i).getType().equals(type) && allProperties.get(i).getArea() == prop_area
 						&& allProperties.get(i).getBathrooms() == prop_bathrooms
 						&& allProperties.get(i).getBedrooms() == prop_bedrooms
-						&& allProperties.get(i).getCity().equals(city)) {
+						&& allProperties.get(i).getCity().equals(city)  && allProperties.get(i).getCity().equals(city) && allProperties.get(i).getStatus().equals("available")) {
 					wantedProperties.add(allProperties.get(i));
 				}
 
@@ -211,7 +211,7 @@ public class UserController {
 	public String create_property(@Valid @ModelAttribute("property") Property property, BindingResult result,
 			HttpSession session) {
 		if (result.hasErrors()) {
-			return "mainPage.jsp";
+			return "create.jsp";
 		}
 		User user = (User) session.getAttribute("currentUser");
 		if (user == null) {
@@ -222,11 +222,11 @@ public class UserController {
 			if (userRolles.get(j).getName().equals("ROLE_OWNER")) {
 				property.setOwner(user);
 				propertyService.createProperty(property, property.getType(), user);
-				return "redirect:/mainPage";
+				return "redirect:/view_ownProperties";
 			}
 		}
 
-		return "redirect:/mainPage";
+		return "redirect:/home";
 
 	}
 
@@ -250,6 +250,21 @@ public class UserController {
 		Property p = (Property) session.getAttribute("property");
 		model.addAttribute("property", p);
 		return "reserve_property.jsp";
+	}
+	
+	@RequestMapping("/view/{id}")
+	public String renderReserveFormm(Model model, @PathVariable("id") Long id, HttpSession session) {
+		Property p = propertyService.findById(id);
+		session.setAttribute("ppp", p);
+//		model.addAttribute("property", p);
+		return "redirect:/viewProp";
+		
+	}
+	@RequestMapping("/viewProp")
+	public String viewProp(Model model, HttpSession session) {
+		model.addAttribute("property", session.getAttribute("ppp"));
+		return "reserve_property.jsp";
+		
 	}
 
 	@PostMapping("/property/reserve/{id}")
@@ -347,5 +362,16 @@ public class UserController {
 		userService.deleteUser(owner);
 		return "redirect:/view_allClientsAndOwners";
 	}
+	
+	@RequestMapping("/contact")
+	public String contact() {
+		return "contact.jsp";
+	}
+	
+	@RequestMapping("/about-us")
+	public String aboutUs() {
+		return "about-us.jsp";
+	}
+	
 
 }
