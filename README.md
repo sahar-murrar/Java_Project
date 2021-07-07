@@ -11,7 +11,13 @@ team members:
 
 
 About System
+
+
+
 ABSTRACT: 
+
+
+
 This Web Application helps user to register individual home or apartment to assist you in finding the perfect rental home or property. 
 Our website based on real estate renting service, which offers to the client in 11 cities (Ramallah, Nablus, Hebron, Jerusalem, Qalqelia, Jenin, Jericho, Bethlehem, Tubas, Yafa, Akka),all the added properties list which include (apartments ,houses ,villas ,commercial offices),now any owner who owns the property can publish it on website ,so the website can offers the easement reach to list of endless real estate properties in west bank.
 Here we found the better opportunity to invest our value of entire life. This system is easy to understand and handle. Here, you have to enter the details of the customers who are seeking for apartments or houses. There are a lot of features to this project. You have to sign up to use the system as an administrator.
