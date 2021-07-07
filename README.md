@@ -1,9 +1,15 @@
 # Java_Project
 team members:
-sahar murrar
-ameena allan
-gaith assaf
+1. sahar murrar
+2. ameena allan
+3. gaith assaf
+
+
+
 ***********************************Renting House Website****************************
+
+
+
 About System
 ABSTRACT: 
 This Web Application helps user to register individual home or apartment to assist you in finding the perfect rental home or property. 
