@@ -14,7 +14,7 @@ team members:
 
 
 
-**ABSTRACT: 
+**ABSTRACT:** 
 
 
 
@@ -54,12 +54,12 @@ All Owners: Owner Info:- Owner name, Delete Owner, Client email, Client phone, O
 -Main page shows also search property search bar which contains the property details like (type property, area, bedrooms, bathrooms, and location). 
 Type property shows us the type of properties which includes (apartments, houses, villas, commercial offices), each one will have area size and the number of bedrooms and bathrooms, and with a specific location which each input shows.
 
-**---Login and Registration:
+**---Login and Registration:**
 
 ![image](https://user-images.githubusercontent.com/39792032/124710736-d79aa980-df05-11eb-8c43-113ada448e6c.png)
 ![image](https://user-images.githubusercontent.com/39792032/124710811-f8fb9580-df05-11eb-9ab0-ed20fb833791.png)
 
-**---Client features:
+**---Client features:**
 
 ![image](https://user-images.githubusercontent.com/39792032/124710924-1df00880-df06-11eb-93b2-a4b8924658c8.png)
 ![image](https://user-images.githubusercontent.com/39792032/124710974-2fd1ab80-df06-11eb-8971-8f56c137edfa.png)
@@ -68,7 +68,7 @@ Type property shows us the type of properties which includes (apartments, houses
 ![image](https://user-images.githubusercontent.com/39792032/124711183-6d363900-df06-11eb-9aa7-0e965efb9d76.png)
 
 
-**--Admin features:
+**--Admin features:**
 
 ![image](https://user-images.githubusercontent.com/39792032/124711399-b38b9800-df06-11eb-86fa-949cb7e9ec23.png)
 
@@ -77,7 +77,7 @@ Type property shows us the type of properties which includes (apartments, houses
 
 
 
- **---Owner features:
+ **---Owner features:**
  
  ![image](https://user-images.githubusercontent.com/39792032/124711649-036a5f00-df07-11eb-9e27-52783ffc6294.png)
 ![image](https://user-images.githubusercontent.com/39792032/124711851-3c0a3880-df07-11eb-803a-3af0553e4b08.png)
