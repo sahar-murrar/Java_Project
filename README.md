@@ -54,7 +54,7 @@ All Owners: Owner Info:- Owner name, Delete Owner, Client email, Client phone, O
 -Main page shows also search property search bar which contains the property details like (type property, area, bedrooms, bathrooms, and location). 
 Type property shows us the type of properties which includes (apartments, houses, villas, commercial offices), each one will have area size and the number of bedrooms and bathrooms, and with a specific location which each input shows.
 
-**Technologies used in this website:** SpringBoot, Bootstrap, responsive website, 
+**Technologies used in this website:** SpringBoot, Bootstrap, responsive website, API for sending emails.
 
 **Main Features:**
 
